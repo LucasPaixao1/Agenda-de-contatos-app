@@ -3,9 +3,10 @@ package vo;
 public class ContatoVO {
 
 	private int id;
-	private String nome;
-	private String ddd;
-	private String telefone;
+	private String nome = " ";
+	private String ddd = " ";
+	private String telefone = " ";
+	
 
 	public int getId() {
 		return id;
