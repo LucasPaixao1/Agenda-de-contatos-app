@@ -1,5 +1,6 @@
 package validator;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import vo.ContatoVO;
 
 public class ContatoValidator {
 
-	public boolean validarContato(ContatoVO contatoVO) throws SQLException {
+	public boolean validarContato(ContatoVO contatoVO) throws SQLException, IOException {
 
 		boolean retorno = true;
 
@@ -73,7 +74,7 @@ public class ContatoValidator {
 		return retorno;
 	}
 
-	public boolean alterarContato(ContatoVO contatoVO) throws SQLException {
+	public boolean alterarContato(ContatoVO contatoVO) throws SQLException, IOException {
 
 		boolean retorno = true;
 

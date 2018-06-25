@@ -1,5 +1,6 @@
 package business;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +13,17 @@ import vo.ContatoVO;
 
 public class ContatoBO {
 
-	public boolean manterContato(ContatoVO contatoVO) throws SQLException {
+	public boolean manterContato(ContatoVO contatoVO) throws SQLException, IOException {
 
 		boolean retorno = true;
 		ContatoValidator contatoValidator = new ContatoValidator();
 		retorno = contatoValidator.validarContato(contatoVO);
+
 		if (retorno) {
 			ContatoDAO contatoDAO = new ContatoDAO();
 			retorno = contatoDAO.inserir(contatoVO);
 		}
+
 		return retorno;
 	}
 
@@ -55,9 +58,9 @@ public class ContatoBO {
 		contatoVO = contatoDAO.pesquisarContatoPorTelefone(telefone, table);
 		return contatoVO;
 	}
-	
-	public boolean alterar(ContatoVO contatoVO) throws SQLException {
-		
+
+	public boolean alterar(ContatoVO contatoVO) throws SQLException, IOException {
+
 		boolean retorno = true;
 		ContatoValidator contatoValidator = new ContatoValidator();
 		retorno = contatoValidator.alterarContato(contatoVO);
@@ -66,7 +69,7 @@ public class ContatoBO {
 			retorno = (boolean) contatoDAO.alter(contatoVO);
 		}
 		return retorno;
-		
+
 	}
 
 }

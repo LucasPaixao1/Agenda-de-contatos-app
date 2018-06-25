@@ -1,16 +1,33 @@
 package dao;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DAOFactory {
 	
-	public static Connection connection() throws SQLException {
+    public static Properties getProp() throws IOException {
+        Properties props = new Properties();
+        FileInputStream file = new FileInputStream("./configuracoes.properties");
+        props.load(file);
+        return props;
+ 
+    }
+	
+	public static Connection connection() throws SQLException, IOException {
 		
-		String url = "jdbc:mysql://localhost:3306/agenda_contatos";
-		String user = "root";
-		String password = "lucas@1234";
+		String url;
+		String user;
+		String password;
+		
+        Properties prop = getProp();
+        
+        url = prop.getProperty("url");
+        user = prop.getProperty("user");
+        password = prop.getProperty("password");
 		
 		return DriverManager.getConnection(url, user, password);
 	}

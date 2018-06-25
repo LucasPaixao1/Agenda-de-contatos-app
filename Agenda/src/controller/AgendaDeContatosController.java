@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,14 @@ public class AgendaDeContatosController {
 	
 	public boolean salvarContato(ContatoVO contatoVO) throws SQLException {
 		boolean retorno = true;
-		ContatoBO contatoBO = new ContatoBO();
-		retorno = contatoBO.manterContato(contatoVO);
+		
+		try {
+			ContatoBO contatoBO = new ContatoBO();
+			retorno = contatoBO.manterContato(contatoVO);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return retorno;
 	}
 
@@ -47,8 +54,13 @@ public class AgendaDeContatosController {
 	public boolean altera(ContatoVO contatoVO) throws SQLException {
 		
 		boolean retorno = true;
-		ContatoBO contatoBO = new ContatoBO();
-		retorno = contatoBO.alterar(contatoVO);
+		try {
+			ContatoBO contatoBO = new ContatoBO();
+			retorno = contatoBO.alterar(contatoVO);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return retorno;
 	}
 

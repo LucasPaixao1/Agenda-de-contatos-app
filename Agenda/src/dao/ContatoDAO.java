@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import java.sql.DriverManager;
@@ -40,6 +41,10 @@ public class ContatoDAO {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+		}catch (IOException e) {
+			
+			e.printStackTrace();
+		
 		}
 		return retorno;
 	}
@@ -61,6 +66,8 @@ public class ContatoDAO {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -94,6 +101,8 @@ public class ContatoDAO {
 				JOptionPane.showMessageDialog(null, "Contato não cadastrado");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 		return contatoVO;
@@ -137,6 +146,8 @@ public class ContatoDAO {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -262,6 +273,8 @@ public class ContatoDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
 		}
 		return contatoVO;
 	}
@@ -295,11 +308,13 @@ public class ContatoDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
 		}
 		return contatoVO;
 	}
 
-	public List<ContatoVO> validaDados() throws SQLException {
+	public List<ContatoVO> validaDados() throws SQLException, IOException {
 
 		List<ContatoVO> retorno = new ArrayList<ContatoVO>();
 

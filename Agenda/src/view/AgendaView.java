@@ -42,6 +42,8 @@ public class AgendaView extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		JOptionPane.showMessageDialog(null, "Seja Bem vindo! (Este Código Também Está Disponivel Neste Link: https://github.com/LucasPaixao1/Agenda-de-contatos-app)");
 
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -275,9 +277,6 @@ public class AgendaView extends JFrame {
 	}
 
 	public void altera() {
-		
-		JOptionPane.showMessageDialog(null, "Se o ID Não For Encontrado Será Cadastrado Um Novo Contato");
-
 		ContatoVO contatoVO = new ContatoVO();
 
 		contatoVO = pegaDados();
@@ -358,11 +357,17 @@ public class AgendaView extends JFrame {
 
 		if (patternNumeros.matcher(txtId.getText()).find()) {
 			txt = Integer.parseInt(txtId.getText());
+		}else {
+			JOptionPane.showMessageDialog(null, "Favor Digite Apenas Números");
 		}
 
 		contatoVO.setId(txt);
 		contatoVO.setNome(txtNome.getText());
 		contatoVO.setDdd(txtDdd.getText());
+		
+		if(!patternNumeros.matcher(txtId.getText()).find()) {
+			JOptionPane.showMessageDialog(null, "Favor Digite Apenas Números");
+		}
 		contatoVO.setTelefone(txtTelefone.getText());
 
 		return contatoVO;
