@@ -21,7 +21,7 @@ public class ContatoValidator {
 		ContatoDAO contatoDAO = new ContatoDAO();
 
 		lista = contatoDAO.validaDados();
-		
+
 		for (ContatoVO VO : lista) {
 
 			if (VO.getId() == contatoVO.getId()) {
@@ -94,30 +94,7 @@ public class ContatoValidator {
 			}
 
 		}
-
-		lista = contatoDAO.validaDados();
-
-		for (ContatoVO VO : lista) {
-			if (VO.getTelefone() == contatoVO.getTelefone()) {
-				JOptionPane.showMessageDialog(null, "Telefone Duplicado");
-				retorno = false;
-				break;
-			}
-
-		}
 		
-		lista = contatoDAO.validaDados();
-
-		for (ContatoVO VO : lista) {
-
-			if (VO.getTelefone().equals(contatoVO.getTelefone())) {
-				JOptionPane.showMessageDialog(null, "Telefone Duplicado");
-				retorno = false;
-				break;
-			}
-
-		} 
-
 		if (retorno == false) {
 
 			JOptionPane.showMessageDialog(null, "ID Não Existente");
@@ -126,10 +103,16 @@ public class ContatoValidator {
 
 		lista = contatoDAO.validaDados();
 
-		if (lista.contains(contatoVO.getTelefone())) {
-			JOptionPane.showMessageDialog(null, "Telefone duplicado");
-			retorno = false;
+		for (ContatoVO VO : lista) {
+			if (VO.getTelefone().equals(contatoVO.getTelefone())) {
+				JOptionPane.showMessageDialog(null, "Telefone Duplicado");
+				retorno = false;
+				break;
+			}
+
 		}
+		
+		lista = contatoDAO.validaDados();
 
 		if (contatoVO.getId() <= 0) {
 			JOptionPane.showMessageDialog(null, "Favor informar um ID maior que 0.");

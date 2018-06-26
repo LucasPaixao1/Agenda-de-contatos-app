@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -25,7 +26,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
@@ -42,8 +46,9 @@ public class AgendaView extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
-		JOptionPane.showMessageDialog(null, "Seja Bem vindo! (Este Código Também Está Disponivel Neste Link: https://github.com/LucasPaixao1/Agenda-de-contatos-app)");
+
+		JOptionPane.showMessageDialog(null,
+				"Seja Bem vindo! (Este Código Também Está Disponivel Neste Link: https://github.com/LucasPaixao1/Agenda-de-contatos-app)");
 
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -73,6 +78,7 @@ public class AgendaView extends JFrame {
 	 * Create the frame.
 	 */
 	public AgendaView() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 698, 610);
 		contentPane = new JPanel();
@@ -156,7 +162,12 @@ public class AgendaView extends JFrame {
 		btnListarTodosOs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				listarTodos();
+				try {
+					listarTodos();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro interno: " + e1.getMessage(), "Atenção",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnListarTodosOs.setBounds(454, 11, 155, 23);
@@ -173,8 +184,13 @@ public class AgendaView extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				salvaDados();
-				limpar();
+				try {
+					salvaDados();
+					limpar();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro interno: " + e1.getMessage(), "Atenção",
+							JOptionPane.ERROR_MESSAGE);
+				}
 
 			}
 
@@ -186,8 +202,13 @@ public class AgendaView extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				altera();
-				limpar();
+				try {
+					altera();
+					limpar();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro interno: " + e1.getMessage(), "Atenção",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton_1.setBounds(6, 50, 94, 23);
@@ -197,9 +218,13 @@ public class AgendaView extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				delete();
-				limpar();
-
+				try {
+					delete();
+					limpar();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro interno: " + e1.getMessage(), "Atenção",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton_2.setBounds(6, 84, 94, 23);
@@ -209,21 +234,28 @@ public class AgendaView extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if ((!txtId.getText().equals("") && !txtNome.getText().equals("")) || (!txtTelefone.getText().equals("") && !txtNome.getText().equals("")) || (!txtTelefone.getText().equals("") && !txtId.getText().equals(""))) {
-					
-					JOptionPane.showMessageDialog(null, "Por Favor Insira Apenas um Atributo para Pesquisa", "Atenção", JOptionPane.ERROR_MESSAGE);
-					
-				} else if (!txtId.getText().equals("")) {
-					pesquisarId();
-				} else if (!txtNome.getText().equals("")) {
-					pesquisarNome();
-				} else if (!txtTelefone.getText().equals("")) {
-					pesquisarTelefone();
-				} else {
+				try {
+					if ((!txtId.getText().equals("") && !txtNome.getText().equals(""))
+							|| (!txtTelefone.getText().equals("") && !txtNome.getText().equals(""))
+							|| (!txtTelefone.getText().equals("") && !txtId.getText().equals(""))) {
 
-					JOptionPane.showMessageDialog(null, "Por Favor Insira Algum Dos Atributos Abaixo");
+						JOptionPane.showMessageDialog(null, "Por Favor Insira Apenas um Atributo para Pesquisa",
+								"Atenção", JOptionPane.ERROR_MESSAGE);
+
+					} else if (!txtId.getText().equals("")) {
+						pesquisarId();
+					} else if (!txtNome.getText().equals("")) {
+						pesquisarNome();
+					} else if (!txtTelefone.getText().equals("")) {
+						pesquisarTelefone();
+					} else {
+						JOptionPane.showMessageDialog(null, "Por Favor Insira Algum Dos Atributos Abaixo");
+					}
+
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro interno: " + e1.getMessage(), "Atenção",
+							JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 
 		});
@@ -244,7 +276,7 @@ public class AgendaView extends JFrame {
 
 	///////////////////////////// METODOS//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public void delete() {
+	private void delete() throws HeadlessException, SQLException, IOException {
 		ContatoVO contatoVO = new ContatoVO();
 
 		int txt = Integer.parseInt(txtId.getText());
@@ -255,20 +287,14 @@ public class AgendaView extends JFrame {
 
 	}
 
-	public void salvaDados() {
+	private void salvaDados() throws SQLException, IOException {
 
 		ContatoVO contatoVO = new ContatoVO();
 		contatoVO = pegaDados();
 
 		boolean salvou = false;
-		try {
-			AgendaDeContatosController contatoController = new AgendaDeContatosController();
-			salvou = contatoController.salvarContato(contatoVO);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		AgendaDeContatosController contatoController = new AgendaDeContatosController();
+		salvou = contatoController.salvarContato(contatoVO);
 
 		if (salvou) {
 			JOptionPane.showMessageDialog(null, "Contato Cadastrado com sucesso");
@@ -276,30 +302,41 @@ public class AgendaView extends JFrame {
 
 	}
 
-	public void altera() {
+	private void altera() throws SQLException, IOException {
 		ContatoVO contatoVO = new ContatoVO();
 
 		contatoVO = pegaDados();
 
 		AgendaDeContatosController agendaDeContatosController = new AgendaDeContatosController();
 
-		try {
-			agendaDeContatosController.altera(contatoVO);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		agendaDeContatosController.altera(contatoVO);
 
 	}
 
-	private void listarTodos() {
+	private void listarTodos() throws SQLException, IOException {
 		AgendaDeContatosController controller = new AgendaDeContatosController();
+		List<ContatoVO> lista = new ArrayList<ContatoVO>();
 
-		controller.pesquisarContatoTodos(this.table);
+		lista = controller.pesquisarContatoTodos(this.table);
 
+		cleanTable(table);
+		
+		for (ContatoVO contatoVO : lista) {
+
+			DefaultTableModel dados = (DefaultTableModel) table.getModel();
+
+			String txt = Integer.toString(contatoVO.getId());
+
+			dados.addRow(new String[] { txt, contatoVO.getNome(), contatoVO.getDdd(), contatoVO.getTelefone() });
+			txtId.setText("");
+			txtNome.setText("");
+			txtDdd.setText("");
+			txtTelefone.setText("");
+			txtId.requestFocus();
+		}
 	}
 
-	public void pesquisarId() {
+	private void pesquisarId() throws SQLException, IOException {
 		AgendaDeContatosController controller = new AgendaDeContatosController();
 		ContatoVO contatoVO = new ContatoVO();
 		int id = 0;
@@ -310,36 +347,56 @@ public class AgendaView extends JFrame {
 			id = Integer.parseInt(txtId.getText());
 		}
 
-		String nome = txtNome.getText();
-		String telefone = txtTelefone.getText();
-
-		controller.pesquisarContatoPorId(id, nome, telefone, table);
+		contatoVO = controller.pesquisarContatoPorId(id);
+		cleanTable(table);
+		
+		addDadosTable(table, contatoVO);
 
 	}
 
-	public void pesquisarNome() {
+	private void pesquisarNome() throws SQLException, IOException {
+
+		AgendaDeContatosController controller = new AgendaDeContatosController();
+		List<ContatoVO> lista = new ArrayList<ContatoVO>();
+		String nome = txtNome.getText();
+
+		lista = controller.pesquisarContatoPorNome(nome);
+		
+
+		cleanTable(table);
+		
+		for (ContatoVO contatoVO : lista) {
+
+			DefaultTableModel dados = (DefaultTableModel) table.getModel();
+
+			String txt = Integer.toString(contatoVO.getId());
+
+			dados.addRow(new String[] { txt, contatoVO.getNome(), contatoVO.getDdd(), contatoVO.getTelefone() });
+			txtId.setText("");
+			txtNome.setText("");
+			txtDdd.setText("");
+			txtTelefone.setText("");
+			txtId.requestFocus();
+		}
+
+	}
+
+	private void pesquisarTelefone() throws SQLException, IOException {
 
 		AgendaDeContatosController controller = new AgendaDeContatosController();
 		ContatoVO contatoVO = new ContatoVO();
 
-		String nome = txtNome.getText();
-
-		controller.pesquisarContatoPorNome(nome, table);
-
-	}
-
-	public void pesquisarTelefone() {
-
-		AgendaDeContatosController controller = new AgendaDeContatosController();
-		ContatoVO contatoVO = new ContatoVO();
-
 		String telefone = txtTelefone.getText();
 
-		controller.pesquisarContatoPorTelefone(telefone, table);
+		contatoVO = controller.pesquisarContatoPorTelefone(telefone);
+		
+		cleanTable(table);
+		
+		addDadosTable(table, contatoVO);
 
 	}
 
-	public void limpar() {
+	private void limpar() {
 
 		txtId.setText("");
 		txtNome.setText("");
@@ -349,7 +406,7 @@ public class AgendaView extends JFrame {
 
 	}
 
-	public ContatoVO pegaDados() {
+	private ContatoVO pegaDados() {
 		ContatoVO contatoVO = new ContatoVO();
 
 		int txt = 0;
@@ -357,19 +414,42 @@ public class AgendaView extends JFrame {
 
 		if (patternNumeros.matcher(txtId.getText()).find()) {
 			txt = Integer.parseInt(txtId.getText());
-		}else {
+		} else {
 			JOptionPane.showMessageDialog(null, "Favor Digite Apenas Números");
 		}
 
 		contatoVO.setId(txt);
 		contatoVO.setNome(txtNome.getText());
 		contatoVO.setDdd(txtDdd.getText());
-		
-		if(!patternNumeros.matcher(txtId.getText()).find()) {
+
+		if (!patternNumeros.matcher(txtId.getText()).find()) {
 			JOptionPane.showMessageDialog(null, "Favor Digite Apenas Números");
 		}
 		contatoVO.setTelefone(txtTelefone.getText());
 
 		return contatoVO;
+	}
+
+	private void addDadosTable(JTable tabela, ContatoVO contatoVO) {
+
+		DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
+
+		String txt = Integer.toString(contatoVO.getId());
+
+		dados.addRow(new String[] { txt, contatoVO.getNome(), contatoVO.getDdd(), contatoVO.getTelefone() });
+		txtId.setText("");
+		txtNome.setText("");
+		txtDdd.setText("");
+		txtTelefone.setText("");
+		txtId.requestFocus();
+
+	}
+
+	private void cleanTable(JTable tabela) {
+
+		DefaultTableModel dtm = (DefaultTableModel) tabela.getModel();
+
+		dtm.setNumRows(0);
+
 	}
 }

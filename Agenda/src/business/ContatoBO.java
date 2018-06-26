@@ -27,35 +27,35 @@ public class ContatoBO {
 		return retorno;
 	}
 
-	public ContatoVO pesquisarContatoPorId(int id, String nome, String telefone, JTable tabela) {
+	public ContatoVO pesquisarContatoPorId(int id) throws SQLException, IOException {
 
 		ContatoVO contatoVO = new ContatoVO();
 
 		ContatoDAO contatoDAO = new ContatoDAO();
-		contatoVO = contatoDAO.pesquisarContatoPorId(id, nome, telefone, tabela);
+		contatoVO = contatoDAO.pesquisarContatoPorId(id);
 		return contatoVO;
 	}
 
-	public List<ContatoVO> pesquisarContatoTodos(JTable tabela) {
+	public List<ContatoVO> pesquisarContatoTodos(JTable tabela) throws SQLException, IOException {
 		List<ContatoVO> retorno = new ArrayList<ContatoVO>();
 		ContatoDAO contatoDAO = new ContatoDAO();
 		retorno = contatoDAO.pesquisarContatoTodos(tabela);
 		return retorno;
 	}
 
-	public ContatoVO pesquisarContatoPorNome(String nome, JTable table) {
+	public List<ContatoVO> pesquisarContatoPorNome(String nome) throws SQLException, IOException {
 		ContatoVO contatoVO = new ContatoVO();
-
+		List<ContatoVO> retorno = new ArrayList<ContatoVO>();
 		ContatoDAO contatoDAO = new ContatoDAO();
-		contatoVO = contatoDAO.pesquisarContatoPorNome(nome, table);
-		return contatoVO;
+		retorno = contatoDAO.pesquisarContatoPorNome(nome);
+		return retorno;
 	}
 
-	public ContatoVO pesquisarContatoPorTelefone(String telefone, JTable table) {
+	public ContatoVO pesquisarContatoPorTelefone(String telefone) throws SQLException, IOException {
 		ContatoVO contatoVO = new ContatoVO();
 
 		ContatoDAO contatoDAO = new ContatoDAO();
-		contatoVO = contatoDAO.pesquisarContatoPorTelefone(telefone, table);
+		contatoVO = contatoDAO.pesquisarContatoPorTelefone(telefone);
 		return contatoVO;
 	}
 

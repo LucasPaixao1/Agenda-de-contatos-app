@@ -11,10 +11,19 @@ public class DAOFactory {
 	
     public static Properties getProp() throws IOException {
         Properties props = new Properties();
-        FileInputStream file = new FileInputStream("./configuracoes.properties");
-        props.load(file);
+        
+        try {
+        	FileInputStream file = new FileInputStream("./configuracoes.properties");
+            props.load(file);
+        } catch (Exception e) {
+        	System.out.println(e.getMessage());
+        	
+        	props.setProperty("url", "jdbc:mysql://localhost:3306/agenda_contatos");
+        	props.setProperty("user", "root");
+        	props.setProperty("password", "root");
+		}
+     
         return props;
- 
     }
 	
 	public static Connection connection() throws SQLException, IOException {
